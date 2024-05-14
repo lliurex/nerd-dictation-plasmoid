@@ -1,0 +1,33 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the nerddictation package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: nerddictation \n"
+"Report-Msgid-Bugs-To: http://lliurex.net\n"
+"POT-Creation-Date: 2024-05-14 08:31+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: ../applets/nerddictation/plugin/NerdDictationWidget.cpp:60
+#, kde-format
+msgid "Nerd-Dictation"
+msgstr ""
+
+#: ../applets/nerddictation/plugin/NerdDictationWidget.cpp:66
+#, kde-format
+msgid "Clic to start dictation"
+msgstr ""
+
+#: ../applets/nerddictation/plugin/NerdDictationWidget.cpp:75
+#, kde-format
+msgid "Clic to end dictation"
+msgstr ""

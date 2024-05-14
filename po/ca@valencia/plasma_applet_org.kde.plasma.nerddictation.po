@@ -1,0 +1,33 @@
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+#
+# lliurex <lliurex@lliurex.net>, 2019.
+msgid ""
+msgstr ""
+"Project-Id-Version: 1.0\n"
+"Report-Msgid-Bugs-To: http://lliurex.net\n"
+"POT-Creation-Date: 2024-05-14 08:31+0200\n"
+"PO-Revision-Date: 2024-05-14 08:36+0200\n"
+"Last-Translator: lliurex <lliurex@lliurex.net>\n"
+"Language-Team: Catalan <kde-i18n-ca@kde.org>\n"
+"Language: es\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 3.0.1\n"
+
+#: ../applets/nerddictation/plugin/NerdDictationWidget.cpp:60
+#, kde-format
+msgid "Nerd-Dictation"
+msgstr "Nerd-Dictation"
+
+#: ../applets/nerddictation/plugin/NerdDictationWidget.cpp:66
+#, kde-format
+msgid "Clic to start dictation"
+msgstr "Feu clic per a començar el dictat"
+
+#: ../applets/nerddictation/plugin/NerdDictationWidget.cpp:75
+#, kde-format
+msgid "Clic to end dictation"
+msgstr "Feu cli per a terminar el dictat"

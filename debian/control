@@ -13,9 +13,9 @@ Build-Depends: cmake (>= 2.8.12),
                pkg-config,
                qtbase5-dev (>= 5.4),
                qtdeclarative5-dev (>= 5.4),
-	       libkf5runner-dev,
-	       libkf5notifications-dev,
-          kio-dev
+               libkf5runner-dev,
+               libkf5notifications-dev,
+               kio-dev
 Standards-Version: 4.4.1
 Homepage: http://lliurex.net
 Vcs-Browser: https://svn.lliurex.net/jammy/nerd-dictation-plasmoid

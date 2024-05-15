@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2023 Juan Ramon Pelegrina <juapesai@hotmail.com>
+ * Copyright (C) 2024 Juan Ramon Pelegrina <juapesai@hotmail.com>
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -61,7 +61,6 @@ void NerdDictationWidget::changeTryIconState(int state){
     QString notificationIcon;
 
     if (state==0){
-        isNerdDictationRun=false;
         setStatus(ActiveStatus);
         const QString subtooltip(i18n("Clic to start dictation"));
         setToolTip(tooltip);
@@ -70,7 +69,6 @@ void NerdDictationWidget::changeTryIconState(int state){
         setIconName(notificationIcon);
      
     }else if (state==2){
-        isNerdDictationRun=true;
         setStatus(ActiveStatus);
         const QString subtooltip(i18n("Clic to end dictation"));
         setToolTip(tooltip);
@@ -96,6 +94,7 @@ void NerdDictationWidget::manage_status()
         job->start();
     }else{
         changeTryIconState(0);
+        isHoldMode=false;
         KIO::CommandLauncherJob *job = nullptr;
         QString cmd="nerd-dictation end";
         job = new KIO::CommandLauncherJob(cmd);
@@ -106,6 +105,8 @@ void NerdDictationWidget::manage_status()
 
 void NerdDictationWidget::manage_hold()
 {
+    isNerdDictationRun=m_utils->isNerdDictationRun();
+
     if (!isNerdDictationRun){
         isHoldMode=true;
         manage_status();

@@ -20,6 +20,7 @@
 
 #include <QObject>
 #include <QProcess>
+#include <QFile>
 
 class NerdDictationWidgetUtils : public QObject
 {
@@ -34,7 +35,9 @@ public:
     bool isNerdDictationInstalled();
     bool isNerdDictationRun();
 
-private:    
+private: 
+
+    QFile TARGET_FILE;   
       
 };
 

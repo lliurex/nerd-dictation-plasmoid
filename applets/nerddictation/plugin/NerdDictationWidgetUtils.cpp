@@ -27,26 +27,17 @@ NerdDictationWidgetUtils::NerdDictationWidgetUtils(QObject *parent)
     : QObject(parent)
        
 {
+
+    TARGET_FILE.setFileName("/usr/bin/nerd-dictation");
   
 }    
 
 bool NerdDictationWidgetUtils::isNerdDictationInstalled(){
 
-    QProcess process;
-    QStringList output;
-    QString outputInfo;
     bool isInstalled=false;
-    QString cmd="apt-cache policy nerd-dictation";
-    process.start("/bin/sh",QStringList()<<"-c"<<cmd);
-    process.waitForFinished(-1);
-    QString stdout=process.readAllStandardOutput();
-    QString stderr=process.readAllStandardError();
-    output=stdout.split('\n');
-    if (output.length()>1){
-        outputInfo=output[1].split(":")[1];
-        if (!outputInfo.contains("(")){
-            isInstalled=true;
-        }
+    
+    if (NerdDictationWidgetUtils::TARGET_FILE.exists()) {
+        isInstalled=true;
     }
 
     return isInstalled;

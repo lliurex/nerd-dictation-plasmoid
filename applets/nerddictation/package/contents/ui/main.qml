@@ -16,6 +16,30 @@ Item {
         id:nerdDictationWidget
     }
 
+     function populateContextualActions() {
+        plasmoid.clearActions()
+
+        plasmoid.setAction("play", i18n("Start dictation"), "media-playback-start")
+        plasmoid.action("play").enabled = nerdDictationWidget.canPlay
+        plasmoid.action("play").visible = nerdDictationWidget.canPlay
+        plasmoid.action("play").priority = Plasmoid.LowPriorityAction
+
+        plasmoid.setAction("pause", i18n("Pause dictation"), "media-playback-pause")
+        plasmoid.action("pause").enabled = nerdDictationWidget.canPause
+        plasmoid.action("pause").visible = nerdDictationWidget.canPause
+        plasmoid.action("pause").priority = Plasmoid.LowPriorityAction
+
+        plasmoid.setAction("resume", i18n("Continue dictation"), "media-playback-start")
+        plasmoid.action("resume").enabled = nerdDictationWidget.canResume
+        plasmoid.action("resume").visible = nerdDictationWidget.canResume
+        plasmoid.action("resume").priority = Plasmoid.LowPriorityAction
+
+        plasmoid.setAction("stop", i18n("Stop dictation"), "media-playback-stop")
+        plasmoid.action("stop").enabled = nerdDictationWidget.canStop
+        plasmoid.action("stop").visible = nerdDictationWidget.canStop
+        plasmoid.action("stop").priority = Plasmoid.LowPriorityAction
+
+      }
     Plasmoid.status: {
         /* Warn! Enum types are accesed through ClassName not ObjectName */
         switch (nerdDictationWidget.status){
@@ -38,6 +62,7 @@ Item {
 
     Component.onCompleted: {
         plasmoid.removeAction("configure");
+        populateContextualActions();
     }
 
     Plasmoid.preferredRepresentation: Plasmoid.compactRepresentation
@@ -49,21 +74,38 @@ Item {
             anchors.fill:parent
             hoverEnabled:true
             propagateComposedEvents:true
-            onClicked:action_clic()
-            onPressAndHold:action_hold()
-            onReleased:action_release()
+            onClicked:{
+                if (nerdDictationWidget.canPlay){
+                    action_play()
+                }else{
+                    if (nerdDictationWidget.canResume){
+                        action_resume()
+                    }else{
+                        action_stop()
+                    }
+                }
+            }
+           /* onPressAndHold:action_hold()
+            onReleased:action_release()*/
         }
     }
 
  
-    function action_clic() {
-        nerdDictationWidget.manage_status()
+    function action_play() {
+        nerdDictationWidget.manage_status("play")
+        populateContextualActions();
     }
-    function action_hold() {
-        nerdDictationWidget.manage_hold()
+    function action_pause(){
+        nerdDictationWidget.manage_status("pause")
+        populateContextualActions();
     }
-    function action_release() {
-        nerdDictationWidget.manage_release()
+    function action_resume(){
+        nerdDictationWidget.manage_status("resume")
+        populateContextualActions();
+    }
+    function action_stop(){
+        nerdDictationWidget.manage_status("stop")
+        populateContextualActions();
     }
 
  }	

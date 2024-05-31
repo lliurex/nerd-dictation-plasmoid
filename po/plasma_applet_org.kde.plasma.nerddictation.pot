@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: nerddictation \n"
 "Report-Msgid-Bugs-To: http://lliurex.net\n"
-"POT-Creation-Date: 2024-05-14 08:31+0200\n"
+"POT-Creation-Date: 2024-05-31 13:26+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,17 +17,42 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
+#: ../applets/nerddictation/package/contents/ui/main.qml:22
+#, kde-format
+msgid "Start dictation"
+msgstr ""
+
+#: ../applets/nerddictation/package/contents/ui/main.qml:27
+#, kde-format
+msgid "Pause dictation"
+msgstr ""
+
+#: ../applets/nerddictation/package/contents/ui/main.qml:32
+#, kde-format
+msgid "Continue dictation"
+msgstr ""
+
+#: ../applets/nerddictation/package/contents/ui/main.qml:37
+#, kde-format
+msgid "Stop dictation"
+msgstr ""
+
 #: ../applets/nerddictation/plugin/NerdDictationWidget.cpp:60
 #, kde-format
 msgid "Nerd-Dictation"
 msgstr ""
 
-#: ../applets/nerddictation/plugin/NerdDictationWidget.cpp:66
+#: ../applets/nerddictation/plugin/NerdDictationWidget.cpp:65
 #, kde-format
 msgid "Clic to start dictation"
 msgstr ""
 
-#: ../applets/nerddictation/plugin/NerdDictationWidget.cpp:75
+#: ../applets/nerddictation/plugin/NerdDictationWidget.cpp:77
 #, kde-format
 msgid "Clic to end dictation"
+msgstr ""
+
+#: ../applets/nerddictation/plugin/NerdDictationWidget.cpp:89
+#, kde-format
+msgid "Clic to restart dictation"
 msgstr ""

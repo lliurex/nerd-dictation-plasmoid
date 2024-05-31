@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 1.0\n"
 "Report-Msgid-Bugs-To: http://lliurex.net\n"
-"POT-Creation-Date: 2024-05-14 08:31+0200\n"
-"PO-Revision-Date: 2024-05-14 08:36+0200\n"
+"POT-Creation-Date: 2024-05-31 13:26+0200\n"
+"PO-Revision-Date: 2024-05-31 13:35+0200\n"
 "Last-Translator: lliurex <lliurex@lliurex.net>\n"
 "Language-Team: Catalan <kde-i18n-ca@kde.org>\n"
 "Language: es\n"
@@ -17,17 +17,42 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Poedit 3.0.1\n"
 
+#: ../applets/nerddictation/package/contents/ui/main.qml:22
+#, kde-format
+msgid "Start dictation"
+msgstr "Comença el dictat"
+
+#: ../applets/nerddictation/package/contents/ui/main.qml:27
+#, kde-format
+msgid "Pause dictation"
+msgstr "Pausa el dictat"
+
+#: ../applets/nerddictation/package/contents/ui/main.qml:32
+#, kde-format
+msgid "Continue dictation"
+msgstr "Coniinua el dictat"
+
+#: ../applets/nerddictation/package/contents/ui/main.qml:37
+#, kde-format
+msgid "Stop dictation"
+msgstr "Termina el dictat"
+
 #: ../applets/nerddictation/plugin/NerdDictationWidget.cpp:60
 #, kde-format
 msgid "Nerd-Dictation"
 msgstr "Nerd-Dictation"
 
-#: ../applets/nerddictation/plugin/NerdDictationWidget.cpp:66
+#: ../applets/nerddictation/plugin/NerdDictationWidget.cpp:65
 #, kde-format
 msgid "Clic to start dictation"
 msgstr "Feu clic per a començar el dictat"
 
-#: ../applets/nerddictation/plugin/NerdDictationWidget.cpp:75
+#: ../applets/nerddictation/plugin/NerdDictationWidget.cpp:77
 #, kde-format
 msgid "Clic to end dictation"
 msgstr "Feu cli per a terminar el dictat"
+
+#: ../applets/nerddictation/plugin/NerdDictationWidget.cpp:89
+#, kde-format
+msgid "Clic to restart dictation"
+msgstr "Feu clic per a continuar amb el dictat"

@@ -38,6 +38,8 @@ class NerdDictationWidget : public QObject
     Q_PROPERTY(bool canPause READ canPause NOTIFY canPauseChanged)
     Q_PROPERTY(bool canResume READ canResume NOTIFY canResumeChanged)
     Q_PROPERTY(bool canStop READ canStop NOTIFY canStopChanged)
+    Q_PROPERTY(QString placeHolderText READ placeHolderText NOTIFY placeHolderTextChanged)
+
 
     Q_ENUMS(TrayStatus)
 
@@ -77,6 +79,9 @@ public:
     bool canStop();
     void setCanStop(bool);
 
+    QString placeHolderText() const;
+    void setPlaceHolderText(const QString &name);
+
 public slots:
     
     void manage_status(const QString &action);
@@ -93,6 +98,7 @@ signals:
     void canPauseChanged();
     void canResumeChanged();
     void canStopChanged();
+    void placeHolderTextChanged();
 
 private:
 
@@ -105,6 +111,7 @@ private:
     bool m_canPause=false;
     bool m_canResume=false;
     bool m_canStop=false;
+    QString m_placeHolderText;
     
     bool isNerdDictationRun=false;
     bool isHoldMode=false;

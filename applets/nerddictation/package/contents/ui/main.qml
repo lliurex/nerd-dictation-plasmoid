@@ -16,7 +16,7 @@ Item {
         id:nerdDictationWidget
     }
 
-     function populateContextualActions() {
+    function populateContextualActions() {
         plasmoid.clearActions()
 
         plasmoid.setAction("play", i18n("Start dictation"), "media-playback-start")
@@ -39,7 +39,8 @@ Item {
         plasmoid.action("stop").visible = nerdDictationWidget.canStop
         plasmoid.action("stop").priority = Plasmoid.LowPriorityAction
 
-      }
+    }
+
     Plasmoid.status: {
         /* Warn! Enum types are accesed through ClassName not ObjectName */
         switch (nerdDictationWidget.status){
@@ -50,7 +51,6 @@ Item {
         }
         
         return  PlasmaCore.Types.ActiveStatus
-
     }
 
     Plasmoid.switchWidth: units.gridUnit * 5
@@ -65,8 +65,6 @@ Item {
         populateContextualActions();
     }
 
-    Plasmoid.preferredRepresentation: Plasmoid.compactRepresentation
-   
     Plasmoid.compactRepresentation: PlasmaCore.IconItem{
         source:plasmoid.icon
         focus:true
@@ -75,22 +73,124 @@ Item {
             hoverEnabled:true
             propagateComposedEvents:true
             onClicked:{
-                if (nerdDictationWidget.canPlay){
-                    action_play()
-                }else{
-                    if (nerdDictationWidget.canResume){
-                        action_resume()
-                    }else{
-                        action_stop()
-                    }
-                }
-            }
-           /* onPressAndHold:action_hold()
-            onReleased:action_release()*/
+                Plasmoid.expanded = !Plasmoid.expanded
+             }
         }
     }
 
- 
+    Plasmoid.fullRepresentation: PlasmaComponents3.Page {
+        implicitWidth: PlasmaCore.Units.gridUnit * 12
+        implicitHeight: PlasmaCore.Units.gridUnit * 6
+
+        Keys.onReleased:{
+            if (event.key === Qt.Key_Space){
+                if (!event.isAutoRepeat){
+                    if (nerdDictationWidget.canPlay){
+                        action_play()
+                    }else{
+                        if (nerdDictationWidget.canPause){
+                            action_pause()
+                        }else{
+                            if (nerdDictationWidget.canResume){
+                                action_resume()
+                            }else{
+                                event.accepted=false
+                            }
+                        }
+                    }
+                }else{
+                    event.accepted=false
+                }
+            }else{
+                event.accepted=false;
+            }
+        }
+
+        PlasmaExtras.PlaceholderMessage {
+            id:iconSection
+            anchors.centerIn: parent
+            width: parent.width - (PlasmaCore.Units.gridUnit * 4)
+            iconName: Plasmoid.icon
+            text:nerdDictationWidget.placeHolderText
+        }
+
+        RowLayout{
+            id:btnLayout
+            anchors.top:iconSection.bottom
+            anchors.horizontalCenter:parent.horizontalCenter
+            spacing:15
+
+            PlasmaComponents3.ToolButton{
+                id:playBtn
+                width:35
+                height:35
+                visible:nerdDictationWidget.canPlay
+                enabled:nerdDictationWidget.canPlay
+                icon.name:"media-playback-start.svg"
+                focus:true
+                PlasmaComponents3.ToolTip{
+                    id:playTP
+                    text:i18n("Clic to start dictation")
+                }
+                onClicked:{
+                    action_play()
+                }
+            }
+
+            PlasmaComponents3.ToolButton{
+                id:pauseBtn
+                width:35
+                height:35
+                visible:nerdDictationWidget.canPause
+                enabled:nerdDictationWidget.canPause
+                icon.name:"media-playback-pause.svg"
+                focus:true
+                PlasmaComponents3.ToolTip{
+                    id:pauseTP
+                    text:i18n("Clic to pause dictation")
+                }
+                onClicked:{
+                    action_pause()
+                }
+            }
+
+            PlasmaComponents3.ToolButton{
+                id:resumeBtn
+                width:35
+                height:35
+                visible:nerdDictationWidget.canResume
+                enabled:nerdDictationWidget.canResume
+                icon.name:"media-playback-start.svg"
+                focus:true
+                PlasmaComponents3.ToolTip{
+                    id:resumeTP
+                    text:i18n("Clic to continue dictation")
+                }
+                onClicked:{
+                    action_resume()
+                }
+            }
+
+            PlasmaComponents3.ToolButton{
+                id:stopBtn
+                width:35
+                height:35
+                visible:nerdDictationWidget.canStop
+                enabled:nerdDictationWidget.canStop
+                icon.name:"media-playback-stop.svg"
+                focus:false
+                PlasmaComponents3.ToolTip{
+                    id:stopTP
+                    text:i18n("Clic to end dictation")
+                }
+                onClicked:{
+                    action_stop()
+                }
+            }
+        }
+          
+    }
+    
     function action_play() {
         nerdDictationWidget.manage_status("play")
         populateContextualActions();

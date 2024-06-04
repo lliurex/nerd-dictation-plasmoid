@@ -34,5 +34,7 @@ install(FILES "icons/nerd-dictation-on.svg"
         DESTINATION ${DATAROOTDIR}/usr/share/icons/hicolor/scalable/apps/)
 install(FILES "icons/nerd-dictation-off.svg"
         DESTINATION ${DATAROOTDIR}/usr/share/icons/hicolor/scalable/apps/)
+install(FILES "icons/nerd-dictation-pause.svg"
+        DESTINATION ${DATAROOTDIR}/usr/share/icons/hicolor/scalable/apps/)
 #install(FILES "knotifications5/llxonedrive.notifyrc"
 #        DESTINATION ${DATAROOTDIR}/usr/share/knotifications5/)

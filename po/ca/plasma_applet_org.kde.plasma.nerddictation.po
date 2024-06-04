@@ -6,28 +6,89 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 1.0\n"
 "Report-Msgid-Bugs-To: http://lliurex.net\n"
-"POT-Creation-Date: 2024-05-14 08:31+0200\n"
-"PO-Revision-Date: 2024-05-14 08:36+0200\n"
+"POT-Creation-Date: 2024-06-04 10:47+0200\n"
+"PO-Revision-Date: 2024-06-04 10:53+0200\n"
 "Last-Translator: lliurex <lliurex@lliurex.net>\n"
 "Language-Team: Catalan <kde-i18n-ca@kde.org>\n"
-"Language: es\n"
+"Language: ca\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Poedit 3.0.1\n"
 
+#: ../applets/nerddictation/package/contents/ui/main.qml:22
+#, kde-format
+msgid "Start dictation"
+msgstr "Comença el dictat"
+
+#: ../applets/nerddictation/package/contents/ui/main.qml:27
+#, kde-format
+msgid "Pause dictation"
+msgstr "Pausa el dictat"
+
+#: ../applets/nerddictation/package/contents/ui/main.qml:32
+#, kde-format
+msgid "Continue dictation"
+msgstr "Continua el dictat"
+
+#: ../applets/nerddictation/package/contents/ui/main.qml:37
+#, kde-format
+msgid "Stop dictation"
+msgstr "Termina el dictat"
+
+#: ../applets/nerddictation/package/contents/ui/main.qml:42
+#, kde-format
+msgid "See help"
+msgstr "Veu ajuda"
+
+#: ../applets/nerddictation/package/contents/ui/main.qml:135
+#: ../applets/nerddictation/plugin/NerdDictationWidget.cpp:65
+#, kde-format
+msgid "Clic to start dictation"
+msgstr "Feu clic per a començar el dictat"
+
+#: ../applets/nerddictation/package/contents/ui/main.qml:152
+#, kde-format
+msgid "Clic to pause dictation"
+msgstr "Feu cli per a pausar el dictat"
+
+#: ../applets/nerddictation/package/contents/ui/main.qml:169
+#, kde-format
+msgid "Clic to continue dictation"
+msgstr "Feu cli per a continuar el dictat"
+
+#: ../applets/nerddictation/package/contents/ui/main.qml:186
+#, kde-format
+msgid "Clic to end dictation"
+msgstr "Feu cli per a terminar el dictat"
+
 #: ../applets/nerddictation/plugin/NerdDictationWidget.cpp:60
 #, kde-format
 msgid "Nerd-Dictation"
 msgstr "Nerd-Dictation"
 
-#: ../applets/nerddictation/plugin/NerdDictationWidget.cpp:66
+#: ../applets/nerddictation/plugin/NerdDictationWidget.cpp:74
 #, kde-format
-msgid "Clic to start dictation"
-msgstr "Feu clic per a començar el dictat"
+msgid "No dictation running"
+msgstr "No hi ha cap dictat en marxa"
 
-#: ../applets/nerddictation/plugin/NerdDictationWidget.cpp:75
+#: ../applets/nerddictation/plugin/NerdDictationWidget.cpp:79
 #, kde-format
-msgid "Clic to end dictation"
-msgstr "Feu cli per a terminar el dictat"
+msgid "Clic to pause/end dictation"
+msgstr "Feu cli per a pausar/terminar el dictat"
+
+#: ../applets/nerddictation/plugin/NerdDictationWidget.cpp:88
+#, kde-format
+msgid "The dictation is running"
+msgstr "El dictat està en marxa"
+
+#: ../applets/nerddictation/plugin/NerdDictationWidget.cpp:93
+#, kde-format
+msgid "Clic to restart/end dictation"
+msgstr "Feu clic per a continuar/terminar amb el dictat"
+
+#: ../applets/nerddictation/plugin/NerdDictationWidget.cpp:102
+#, kde-format
+msgid "The dictation is paused"
+msgstr "El dictat està en pausa"

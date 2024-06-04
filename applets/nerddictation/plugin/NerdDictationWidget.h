@@ -34,6 +34,13 @@ class NerdDictationWidget : public QObject
     Q_PROPERTY(QString toolTip READ toolTip NOTIFY toolTipChanged)
     Q_PROPERTY(QString subToolTip READ subToolTip NOTIFY subToolTipChanged)
     Q_PROPERTY(QString iconName READ iconName NOTIFY iconNameChanged)
+    Q_PROPERTY(bool canPlay READ canPlay NOTIFY canPlayChanged)
+    Q_PROPERTY(bool canPause READ canPause NOTIFY canPauseChanged)
+    Q_PROPERTY(bool canResume READ canResume NOTIFY canResumeChanged)
+    Q_PROPERTY(bool canStop READ canStop NOTIFY canStopChanged)
+    Q_PROPERTY(QString placeHolderText READ placeHolderText NOTIFY placeHolderTextChanged)
+
+
     Q_ENUMS(TrayStatus)
 
 public:
@@ -60,11 +67,25 @@ public:
     QString iconName() const;
     void setIconName(const QString &name);
 
+    bool canPlay();
+    void setCanPlay(bool);
+
+    bool canPause();
+    void setCanPause(bool);
+
+    bool canResume();
+    void setCanResume(bool);
+
+    bool canStop();
+    void setCanStop(bool);
+
+    QString placeHolderText() const;
+    void setPlaceHolderText(const QString &name);
+
 public slots:
     
-    void manage_status();
-    void manage_hold();
-    void manage_release();
+    void manage_status(const QString &action);
+    void open_help();
 
 signals:
    
@@ -72,6 +93,11 @@ signals:
     void toolTipChanged();
     void subToolTipChanged();
     void iconNameChanged();
+    void canPlayChanged();
+    void canPauseChanged();
+    void canResumeChanged();
+    void canStopChanged();
+    void placeHolderTextChanged();
 
 private:
 
@@ -80,9 +106,13 @@ private:
     QString m_iconName = QStringLiteral("nerd-dictation-off");
     QString m_toolTip;
     QString m_subToolTip;
+    bool m_canPlay=true;
+    bool m_canPause=false;
+    bool m_canResume=false;
+    bool m_canStop=false;
+    QString m_placeHolderText;
     
     bool isNerdDictationRun=false;
-    bool isHoldMode=false;
 
     NerdDictationWidgetUtils* m_utils;
 };

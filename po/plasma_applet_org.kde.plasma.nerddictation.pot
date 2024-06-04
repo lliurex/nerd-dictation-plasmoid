@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: nerddictation \n"
 "Report-Msgid-Bugs-To: http://lliurex.net\n"
-"POT-Creation-Date: 2024-05-31 13:26+0200\n"
+"POT-Creation-Date: 2024-06-04 10:47+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -37,22 +37,57 @@ msgstr ""
 msgid "Stop dictation"
 msgstr ""
 
+#: ../applets/nerddictation/package/contents/ui/main.qml:42
+#, kde-format
+msgid "See help"
+msgstr ""
+
+#: ../applets/nerddictation/package/contents/ui/main.qml:135 ../applets/nerddictation/plugin/NerdDictationWidget.cpp:65
+#, kde-format
+msgid "Clic to start dictation"
+msgstr ""
+
+#: ../applets/nerddictation/package/contents/ui/main.qml:152
+#, kde-format
+msgid "Clic to pause dictation"
+msgstr ""
+
+#: ../applets/nerddictation/package/contents/ui/main.qml:169
+#, kde-format
+msgid "Clic to continue dictation"
+msgstr ""
+
+#: ../applets/nerddictation/package/contents/ui/main.qml:186
+#, kde-format
+msgid "Clic to end dictation"
+msgstr ""
+
 #: ../applets/nerddictation/plugin/NerdDictationWidget.cpp:60
 #, kde-format
 msgid "Nerd-Dictation"
 msgstr ""
 
-#: ../applets/nerddictation/plugin/NerdDictationWidget.cpp:65
+#: ../applets/nerddictation/plugin/NerdDictationWidget.cpp:74
 #, kde-format
-msgid "Clic to start dictation"
+msgid "No dictation running"
 msgstr ""
 
-#: ../applets/nerddictation/plugin/NerdDictationWidget.cpp:77
+#: ../applets/nerddictation/plugin/NerdDictationWidget.cpp:79
 #, kde-format
-msgid "Clic to end dictation"
+msgid "Clic to pause/end dictation"
 msgstr ""
 
-#: ../applets/nerddictation/plugin/NerdDictationWidget.cpp:89
+#: ../applets/nerddictation/plugin/NerdDictationWidget.cpp:88
 #, kde-format
-msgid "Clic to restart dictation"
+msgid "The dictation is running"
+msgstr ""
+
+#: ../applets/nerddictation/plugin/NerdDictationWidget.cpp:93
+#, kde-format
+msgid "Clic to restart/end dictation"
+msgstr ""
+
+#: ../applets/nerddictation/plugin/NerdDictationWidget.cpp:102
+#, kde-format
+msgid "The dictation is paused"
 msgstr ""

@@ -76,7 +76,7 @@ void NerdDictationWidget::changeTryIconState(int state){
      
     }else if (state==2){
         setStatus(ActiveStatus);
-        const QString subtooltip(i18n("Clic to end dictation"));
+        const QString subtooltip(i18n("Clic to pause/end dictation"));
         setToolTip(tooltip);
         setSubToolTip(subtooltip);
         notificationIcon="nerd-dictation-on";
@@ -90,7 +90,7 @@ void NerdDictationWidget::changeTryIconState(int state){
 
     }else if (state==3){
         setStatus(ActiveStatus);
-        const QString subtooltip(i18n("Clic to restart dictation"));
+        const QString subtooltip(i18n("Clic to restart/end dictation"));
         setToolTip(tooltip);
         setSubToolTip(subtooltip);
         notificationIcon="nerd-dictation-pause";
@@ -147,23 +147,12 @@ void NerdDictationWidget::manage_status(const QString &action)
    
 }
 
-void NerdDictationWidget::manage_hold()
+void NerdDictationWidget::open_help()
 {
-    isNerdDictationRun=m_utils->isNerdDictationRun();
-
-    if (!isNerdDictationRun){
-        isHoldMode=true;
-        /*manage_status();*/
-    }
-}
-
-void NerdDictationWidget::manage_release()
-{
-    if (isHoldMode){
-        isHoldMode=false;
-        /*manage_status();*/
-    }
-   
+    KIO::CommandLauncherJob *job = nullptr;
+    QString cmd="xdg-open https://wiki.edu.gva.es/lliurex/tiki-index.php?page=Nerd-Dictation";
+    job = new KIO::CommandLauncherJob(cmd);
+    job->start();
 }
 
 void NerdDictationWidget::setStatus(NerdDictationWidget::TrayStatus status)

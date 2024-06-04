@@ -10,7 +10,7 @@ import org.kde.plasma.private.nerddictation 1.0
 // Item - the most basic plasmoid component, an empty container.
 Item {
 
-    id:nerddictationApplet
+    id:nerdDictationApplet
 
     NerdDictationWidget{
         id:nerdDictationWidget
@@ -38,6 +38,8 @@ Item {
         plasmoid.action("stop").enabled = nerdDictationWidget.canStop
         plasmoid.action("stop").visible = nerdDictationWidget.canStop
         plasmoid.action("stop").priority = Plasmoid.LowPriorityAction
+
+        plasmoid.setAction("help", i18n("See help"), "help-contents")
 
     }
 
@@ -99,13 +101,13 @@ Item {
                         }
                     }
                 }else{
-                    event.accepted=false
+                    event.accepted=false;
                 }
             }else{
                 event.accepted=false;
             }
         }
-
+        
         PlasmaExtras.PlaceholderMessage {
             id:iconSection
             anchors.centerIn: parent
@@ -206,6 +208,9 @@ Item {
     function action_stop(){
         nerdDictationWidget.manage_status("stop")
         populateContextualActions();
+    }
+    function action_help(){
+        nerdDictationWidget.open_help()
     }
 
  }	

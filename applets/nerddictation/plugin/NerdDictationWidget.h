@@ -85,8 +85,7 @@ public:
 public slots:
     
     void manage_status(const QString &action);
-    void manage_hold();
-    void manage_release();
+    void open_help();
 
 signals:
    
@@ -114,7 +113,6 @@ private:
     QString m_placeHolderText;
     
     bool isNerdDictationRun=false;
-    bool isHoldMode=false;
 
     NerdDictationWidgetUtils* m_utils;
 };

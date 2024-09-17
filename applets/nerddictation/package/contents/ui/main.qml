@@ -55,7 +55,7 @@ PlasmoidItem {
 	
 	PlasmaCore.Action {
 		id: configureAction
-		text: i18n("Help")
+		text: i18n("See help")
 		icon.name:"help-contents"
 		onTriggered:action_help()
 	}

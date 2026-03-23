@@ -6,36 +6,41 @@ import org.kde.plasma.core 2.1 as PlasmaCore
 import org.kde.plasma.components 3.0 as PlasmaComponents3
 import org.kde.plasma.extras 2.0 as PlasmaExtras
 
-import org.kde.plasma.private.nerddictation 1.0
+import org.kde.plasma.private.nerddictation 2.0
 // Item - the most basic plasmoid component, an empty container.
 Item {
 
     id:nerdDictationApplet
 
+    property bool waitForRun:nerdDictationWidget.waitForRun
+    
     NerdDictationWidget{
         id:nerdDictationWidget
     }
 
+    onWaitForRunChanged:{
+        populateContextualActions()
+    }
+
     function populateContextualActions() {
         plasmoid.clearActions()
-
         plasmoid.setAction("play", i18n("Start dictation"), "media-playback-start")
-        plasmoid.action("play").enabled = nerdDictationWidget.canPlay
+        plasmoid.action("play").enabled = (nerdDictationWidget.canPlay && !nerdDictationWidget.waitForRun)
         plasmoid.action("play").visible = nerdDictationWidget.canPlay
         plasmoid.action("play").priority = Plasmoid.LowPriorityAction
 
         plasmoid.setAction("pause", i18n("Pause dictation"), "media-playback-pause")
-        plasmoid.action("pause").enabled = nerdDictationWidget.canPause
+        plasmoid.action("pause").enabled = (nerdDictationWidget.canPause && !nerdDictationWidget.waitForRun)
         plasmoid.action("pause").visible = nerdDictationWidget.canPause
         plasmoid.action("pause").priority = Plasmoid.LowPriorityAction
 
         plasmoid.setAction("resume", i18n("Continue dictation"), "media-playback-start")
-        plasmoid.action("resume").enabled = nerdDictationWidget.canResume
+        plasmoid.action("resume").enabled = (nerdDictationWidget.canResume && !nerdDictationWidget.waitForRun)
         plasmoid.action("resume").visible = nerdDictationWidget.canResume
         plasmoid.action("resume").priority = Plasmoid.LowPriorityAction
 
         plasmoid.setAction("stop", i18n("Stop dictation"), "media-playback-stop")
-        plasmoid.action("stop").enabled = nerdDictationWidget.canStop
+        plasmoid.action("stop").enabled = (nerdDictationWidget.canStop && !nerdDictationWidget.waitForRun)
         plasmoid.action("stop").visible = nerdDictationWidget.canStop
         plasmoid.action("stop").priority = Plasmoid.LowPriorityAction
 
@@ -50,6 +55,8 @@ Item {
                  return PlasmaCore.Types.ActiveStatus
             case NerdDictationWidget.PassiveStatus:
                 return PlasmaCore.Types.PassiveStatus
+            case NerdDictationWidget.HiddenStatus:
+                return PlasmaCore.Types.HiddenStatus
         }
         
         return  PlasmaCore.Types.ActiveStatus
@@ -127,7 +134,7 @@ Item {
                 width:35
                 height:35
                 visible:nerdDictationWidget.canPlay
-                enabled:nerdDictationWidget.canPlay
+                enabled:nerdDictationWidget.canPlay && !nerdDictationWidget.waitForRun
                 icon.name:"media-playback-start.svg"
                 focus:true
                 PlasmaComponents3.ToolTip{
@@ -144,7 +151,7 @@ Item {
                 width:35
                 height:35
                 visible:nerdDictationWidget.canPause
-                enabled:nerdDictationWidget.canPause
+                enabled:nerdDictationWidget.canPause && !nerdDictationWidget.waitForRun
                 icon.name:"media-playback-pause.svg"
                 focus:true
                 PlasmaComponents3.ToolTip{
@@ -161,7 +168,7 @@ Item {
                 width:35
                 height:35
                 visible:nerdDictationWidget.canResume
-                enabled:nerdDictationWidget.canResume
+                enabled:nerdDictationWidget.canResume && !nerdDictationWidget.waitForRun
                 icon.name:"media-playback-start.svg"
                 focus:true
                 PlasmaComponents3.ToolTip{
@@ -178,7 +185,7 @@ Item {
                 width:35
                 height:35
                 visible:nerdDictationWidget.canStop
-                enabled:nerdDictationWidget.canStop
+                enabled:nerdDictationWidget.canStop && !nerdDictationWidget.waitForRun
                 icon.name:"media-playback-stop.svg"
                 focus:false
                 PlasmaComponents3.ToolTip{

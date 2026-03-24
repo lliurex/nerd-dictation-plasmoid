@@ -7,7 +7,7 @@ import org.kde.plasma.components as PlasmaComponents3
 import org.kde.plasma.extras as PlasmaExtras
 import org.kde.kirigami as Kirigami
 
-import org.kde.plasma.private.nerddictation 1.0
+import org.kde.plasma.private.nerddictation
 // Item - the most basic plasmoid component, an empty container.
 PlasmoidItem {
 
@@ -22,7 +22,7 @@ PlasmoidItem {
 			 text: i18n("Start dictation")
 			 icon.name:"media-playback-start"
 			 visible:nerdDictationWidget.canPlay
-			 enabled:nerdDictationWidget.canPlay
+			 enabled:(nerdDictationWidget.canPlay && !nerdDictationWidget.waitForRun)
 			 priority:Plasmoid.LowPriorityAction
 			 onTriggered:action_play()
 		},
@@ -30,7 +30,7 @@ PlasmoidItem {
 			 text: i18n("Pause dictation")
 			 icon.name:"media-playback-pause"
 			 visible:nerdDictationWidget.canPause
-			 enabled:nerdDictationWidget.canPause
+			 enabled:(nerdDictationWidget.canPause && !nerdDictationWidget.waitForRun)
 			 priority:Plasmoid.LowPriorityAction
 			 onTriggered:action_pause()
 		},
@@ -38,7 +38,7 @@ PlasmoidItem {
 			 text: i18n("Continue dictation")
 			 icon.name:"media-playback-start"
 			 visible:nerdDictationWidget.canResume
-			 enabled:nerdDictationWidget.canResume
+			 enabled: (nerdDictationWidget.canResume && !nerdDictationWidget.waitForRun)
 			 priority:Plasmoid.LowPriorityAction
 			 onTriggered:action_resume()
 		},
@@ -46,7 +46,7 @@ PlasmoidItem {
 			 text: i18n("Stop dictation")
 			 icon.name:"media-playback-stop"
 			 visible:nerdDictationWidget.canStop
-			 enabled:nerdDictationWidget.canStop
+			 enabled:(nerdDictationWidget.canStop && !nerdDictationWidget.waitForRun)
 			 priority:Plasmoid.LowPriorityAction
 			 onTriggered:action_stop()
 		}
@@ -66,6 +66,8 @@ PlasmoidItem {
 				return PlasmaCore.Types.ActiveStatus
 			case NerdDictationWidget.PassiveStatus:
 				return PlasmaCore.Types.PassiveStatus
+			case NerdDictationWidget.HiddenStatus:
+				return PlasmaCore.Types.HiddenStatus
 		}
 		
 		return  PlasmaCore.Types.ActiveStatus
@@ -88,7 +90,6 @@ PlasmoidItem {
 		hoverEnabled:true
 		
 		onClicked:{
-			console.log("CLICK")
 			nerdDictationApplet.expanded = !nerdDictationApplet.expanded
 		}
 		
@@ -146,7 +147,7 @@ PlasmoidItem {
 				width:35
 				height:35
 				visible:nerdDictationWidget.canPlay
-				enabled:nerdDictationWidget.canPlay
+				enabled:nerdDictationWidget.canPlay && !nerdDictationWidget.waitForRun
 				icon.name:"media-playback-start.svg"
 				focus:true
 				PlasmaComponents3.ToolTip{
@@ -163,7 +164,7 @@ PlasmoidItem {
 				width:35
 				height:35
 				visible:nerdDictationWidget.canPause
-				enabled:nerdDictationWidget.canPause
+				enabled:nerdDictationWidget.canPause && !nerdDictationWidget.waitForRun
 				icon.name:"media-playback-pause.svg"
 				focus:true
 				PlasmaComponents3.ToolTip{
@@ -180,7 +181,7 @@ PlasmoidItem {
 				width:35
 				height:35
 				visible:nerdDictationWidget.canResume
-				enabled:nerdDictationWidget.canResume
+				enabled:nerdDictationWidget.canResume && !nerdDictationWidget.waitForRun
 				icon.name:"media-playback-start.svg"
 				focus:true
 				PlasmaComponents3.ToolTip{
@@ -197,7 +198,7 @@ PlasmoidItem {
 				width:35
 				height:35
 				visible:nerdDictationWidget.canStop
-				enabled:nerdDictationWidget.canStop
+				enabled:nerdDictationWidget.canStop && !nerdDictationWidget.waitForRun
 				icon.name:"media-playback-stop.svg"
 				focus:false
 				PlasmaComponents3.ToolTip{

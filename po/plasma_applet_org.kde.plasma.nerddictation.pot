@@ -1,14 +1,14 @@
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
-# This file is distributed under the same license as the nerddictation package.
+# This file is distributed under the same license as the plasma-widget-nerd-dictation package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: nerddictation \n"
-"Report-Msgid-Bugs-To: http://lliurex.net\n"
-"POT-Creation-Date: 2024-06-04 10:47+0200\n"
+"Project-Id-Version: plasma-widget-nerd-dictation \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-03-24 09:01+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -22,72 +22,83 @@ msgstr ""
 msgid "Start dictation"
 msgstr ""
 
-#: ../applets/nerddictation/package/contents/ui/main.qml:27
+#: ../applets/nerddictation/package/contents/ui/main.qml:30
 #, kde-format
 msgid "Pause dictation"
 msgstr ""
 
-#: ../applets/nerddictation/package/contents/ui/main.qml:32
+#: ../applets/nerddictation/package/contents/ui/main.qml:38
 #, kde-format
 msgid "Continue dictation"
 msgstr ""
 
-#: ../applets/nerddictation/package/contents/ui/main.qml:37
+#: ../applets/nerddictation/package/contents/ui/main.qml:46
 #, kde-format
 msgid "Stop dictation"
 msgstr ""
 
-#: ../applets/nerddictation/package/contents/ui/main.qml:42
+#: ../applets/nerddictation/package/contents/ui/main.qml:58
 #, kde-format
 msgid "See help"
 msgstr ""
 
-#: ../applets/nerddictation/package/contents/ui/main.qml:135 ../applets/nerddictation/plugin/NerdDictationWidget.cpp:65
+#: ../applets/nerddictation/package/contents/ui/main.qml:155 ../applets/nerddictation/plugin/NerdDictationWidget.cpp:77 ../applets/nerddictation/plugin/NerdDictationWidget.cpp:96
+#: ../applets/nerddictation/plugin/NerdDictationWidget.cpp:106
 #, kde-format
 msgid "Clic to start dictation"
 msgstr ""
 
-#: ../applets/nerddictation/package/contents/ui/main.qml:152
+#: ../applets/nerddictation/package/contents/ui/main.qml:172
 #, kde-format
 msgid "Clic to pause dictation"
 msgstr ""
 
-#: ../applets/nerddictation/package/contents/ui/main.qml:169
+#: ../applets/nerddictation/package/contents/ui/main.qml:189
 #, kde-format
 msgid "Clic to continue dictation"
 msgstr ""
 
-#: ../applets/nerddictation/package/contents/ui/main.qml:186
+#: ../applets/nerddictation/package/contents/ui/main.qml:206
 #, kde-format
 msgid "Clic to end dictation"
 msgstr ""
 
-#: ../applets/nerddictation/plugin/NerdDictationWidget.cpp:60
+#: ../applets/nerddictation/plugin/NerdDictationWidget.cpp:62
 #, kde-format
 msgid "Nerd-Dictation"
 msgstr ""
 
-#: ../applets/nerddictation/plugin/NerdDictationWidget.cpp:74
+#: ../applets/nerddictation/plugin/NerdDictationWidget.cpp:80
 #, kde-format
 msgid "No dictation running"
 msgstr ""
 
-#: ../applets/nerddictation/plugin/NerdDictationWidget.cpp:79
+#: ../applets/nerddictation/plugin/NerdDictationWidget.cpp:83
 #, kde-format
 msgid "Clic to pause/end dictation"
 msgstr ""
 
-#: ../applets/nerddictation/plugin/NerdDictationWidget.cpp:88
+#: ../applets/nerddictation/plugin/NerdDictationWidget.cpp:87
 #, kde-format
 msgid "The dictation is running"
 msgstr ""
 
-#: ../applets/nerddictation/plugin/NerdDictationWidget.cpp:93
+#: ../applets/nerddictation/plugin/NerdDictationWidget.cpp:90
 #, kde-format
 msgid "Clic to restart/end dictation"
 msgstr ""
 
-#: ../applets/nerddictation/plugin/NerdDictationWidget.cpp:102
+#: ../applets/nerddictation/plugin/NerdDictationWidget.cpp:94
 #, kde-format
 msgid "The dictation is paused"
+msgstr ""
+
+#: ../applets/nerddictation/plugin/NerdDictationWidget.cpp:103
+#, kde-format
+msgid "Failed to run action. Try again"
+msgstr ""
+
+#: ../applets/nerddictation/plugin/NerdDictationWidget.cpp:145
+#, kde-format
+msgid "An error was detected during execution"
 msgstr ""

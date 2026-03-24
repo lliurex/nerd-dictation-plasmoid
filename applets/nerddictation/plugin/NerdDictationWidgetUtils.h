@@ -33,11 +33,19 @@ public:
     NerdDictationWidgetUtils(QObject *parent = nullptr);
 
     bool isNerdDictationInstalled();
-    bool isNerdDictationRun();
+    void isNerdDictationRun();
+
+signals:
+
+    void isNerdDictationRunFinished(bool isRunning);
+
 
 private: 
 
-    QFile TARGET_FILE;   
+    QFile TARGET_FILE;
+    QProcess *m_process = nullptr;
+
+
       
 };
 

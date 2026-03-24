@@ -31,9 +31,11 @@
 NerdDictationWidget::NerdDictationWidget(QObject *parent)
     : QObject(parent)
     ,m_utils(new NerdDictationWidgetUtils(this))
+
     
 {
-    
+    connect(m_utils,&NerdDictationWidgetUtils::isNerdDictationRunFinished,this,&NerdDictationWidget::handleIsNerdDictationRunFinished);
+
     plasmoidMode();
 }    
 
@@ -43,9 +45,9 @@ void NerdDictationWidget::plasmoidMode(){
     bool isNerdDictationInstalled=m_utils->isNerdDictationInstalled();
 
     if (isNerdDictationInstalled){
-        changeTryIconState(0);
+        changeTryIconState(0,false);
     }else{
-        changeTryIconState(1);
+        setStatus(HiddenStatus);
     }
       
 }
@@ -55,96 +57,135 @@ NerdDictationWidget::TrayStatus NerdDictationWidget::status() const
     return m_status;
 }
 
-void NerdDictationWidget::changeTryIconState(int state){
+void NerdDictationWidget::changeTryIconState(int state, bool isError){
 
     const QString tooltip(i18n("Nerd-Dictation"));
     QString notificationIcon;
+    bool canPlay=false;
+    bool canStop=false;
+    bool canPause=false;
+    bool canResume=false;
+    bool activeStatus=true;
+    bool changeActions=true;
+    QString holderText;
+    QString subtooltip;
 
-    if (state==0){
-        setStatus(ActiveStatus);
-        const QString subtooltip(i18n("Clic to start dictation"));
-        setToolTip(tooltip);
-        setSubToolTip(subtooltip);
-        notificationIcon="nerd-dictation-off";
-        setIconName(notificationIcon);
-        setCanPlay(true);
-        setCanPause(false);
-        setCanResume(false);
-        setCanStop(false);
-        const QString placeHolderText(i18n("No dictation running"));
-        setPlaceHolderText(placeHolderText);
+    if (!isError){
+        if (previousState!=state){
+            previousState=state;
+            if (state==0){
+                subtooltip=i18n("Clic to start dictation");
+                canPlay=true;
+                notificationIcon="nerd-dictation-off";
+                holderText=i18n("No dictation running");
      
-    }else if (state==2){
-        setStatus(ActiveStatus);
-        const QString subtooltip(i18n("Clic to pause/end dictation"));
-        setToolTip(tooltip);
-        setSubToolTip(subtooltip);
-        notificationIcon="nerd-dictation-on";
-        setIconName(notificationIcon);
-        setCanPlay(false);
-        setCanPause(true);
-        setCanResume(false);
-        setCanStop(true);
-        const QString placeHolderText(i18n("The dictation is running"));
-        setPlaceHolderText(placeHolderText);
+            }else if (state==2){
+                subtooltip=i18n("Clic to pause/end dictation");
+                notificationIcon="nerd-dictation-on";
+                canPause=true;
+                canStop=true;
+                holderText=i18n("The dictation is running");
 
-    }else if (state==3){
-        setStatus(ActiveStatus);
-        const QString subtooltip(i18n("Clic to restart/end dictation"));
-        setToolTip(tooltip);
-        setSubToolTip(subtooltip);
-        notificationIcon="nerd-dictation-pause";
-        setIconName(notificationIcon);
-        setCanPlay(false);
-        setCanPause(false);
-        setCanResume(true);
-        setCanStop(true);
-        const QString placeHolderText(i18n("The dictation is paused"));
-        setPlaceHolderText(placeHolderText);
+            }else if (state==3){
+                subtooltip=i18n("Clic to restart/end dictation");
+                notificationIcon="nerd-dictation-pause";
+                canResume=true;
+                canStop=true;
+                holderText=i18n("The dictation is paused");
+            }else{
+                subtooltip=i18n("Clic to start dictation");
+                canPlay=true;
+                holderText="";
+                activeStatus=false;
+            }
+        }else{
+            changeActions=false;
+            holderText=i18n("Failed to run action. Try again");
+        }
+    }else{;
+        subtooltip=i18n("Clic to start dictation");
+        notificationIcon="nerd-dictation-off";
+        canPlay=true;
+   }
 
+    setWaitForRun(true);
+    if (activeStatus){
+        setStatus(ActiveStatus);
     }else{
-        setCanPlay(true);
-        setCanPause(false);
-        setCanResume(false);
-        setCanStop(false);
         setStatus(PassiveStatus);
     }
-    
+    if (changeActions){
+        setSubToolTip(subtooltip);
+        setCanPlay(canPlay);
+        setCanPause(canPause);
+        setCanResume(canResume);
+        setCanStop(canStop);
+        setToolTip(tooltip);
+        setIconName(notificationIcon);
+    }
+    if (!isError){
+        setPlaceHolderText(holderText);
+    }
+    setWaitForRun(false);
 }
 
 void NerdDictationWidget::manage_status(const QString &action)
 {
-    isNerdDictationRun=m_utils->isNerdDictationRun();
-    KIO::CommandLauncherJob *job = nullptr;
+    
+    if (!m_waitForRun){
+        setWaitForRun(true);
+        actionToRun=action;
+        m_utils->isNerdDictationRun();
+    }
+}
 
-    if (!isNerdDictationRun){
-        if (action=="play"){
-            QString cmd="nerd-dictation begin";
-            job = new KIO::CommandLauncherJob(cmd);
-            job->start();
-            changeTryIconState(2);
-        }
-    }else{
-        if (action=="pause"){
-            QString cmd="nerd-dictation suspend";
-            job = new KIO::CommandLauncherJob(cmd);
-            job->start();
-            changeTryIconState(3);
-        }else if (action=="resume"){
-            QString cmd="nerd-dictation resume";
-            job = new KIO::CommandLauncherJob(cmd);
-            job->start();
-            changeTryIconState(2);
-        }else if (action=="stop"){
-            QString cmd="nerd-dictation end";
-            job = new KIO::CommandLauncherJob(cmd);
-            job->start();
-            changeTryIconState(0);
+void NerdDictationWidget::handleIsNerdDictationRunFinished(bool isRunning)
+{
+    
+    QString errorText = i18n("An error was detected during execution");
+    QString holderText = m_placeHolderText.contains("An error") ? 
+                         m_placeHolderText : (m_placeHolderText + "\n" + errorText);
 
+    QProcess *process = new QProcess(this);
+    QStringList args;
+    int targetState = 0;
+
+    if (!isRunning) {
+        args << "begin";
+        targetState = 2;
+    } else {
+        if (actionToRun == "pause") {
+            args << "suspend";
+            targetState = 3;
+        } else if (actionToRun == "resume") {
+            args <<"resume";
+            targetState = 2;
+        } else if (actionToRun == "stop") {
+            args << "end";
+            targetState = 0;
         }
-   
-     }   
-   
+    }
+
+    connect(process, &QProcess::errorOccurred, this, [this, holderText](QProcess::ProcessError error) {
+        qDebug() << "[NERD-DICTATION CRITICAL-ERROR:]" << error;
+        this->setPlaceHolderText(holderText);
+        this->changeTryIconState(0,true);
+    });
+
+    connect(process, QOverload<int, QProcess::ExitStatus>::of(&QProcess::finished), 
+            this, [this, process, holderText](int exitCode, QProcess::ExitStatus exitStatus) {
+        
+        if (exitStatus == QProcess::CrashExit || exitCode != 0) {
+            qDebug() << "[NERD-DICTATION ERROR:]" << process->readAllStandardError();
+            this->setPlaceHolderText(holderText);
+            this->changeTryIconState(0,true);
+        }
+        process->deleteLater();
+    });
+
+    process->start("nerd-dictation", args);
+    changeTryIconState(targetState,false);
+
 }
 
 void NerdDictationWidget::open_help()
@@ -269,5 +310,20 @@ void NerdDictationWidget::setPlaceHolderText(const QString &placeHolderText)
     if (m_placeHolderText != placeHolderText) {
         m_placeHolderText = placeHolderText;
         emit placeHolderTextChanged();
+    }
+}
+
+bool NerdDictationWidget::waitForRun(){
+
+    return m_waitForRun;
+
+}
+
+void NerdDictationWidget::setWaitForRun(bool waitForRun){
+
+    if (m_waitForRun!=waitForRun){
+        m_waitForRun=waitForRun;
+        emit waitForRunChanged();
+
     }
 }

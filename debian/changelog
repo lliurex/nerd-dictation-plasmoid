@@ -1,3 +1,9 @@
+plasma-widget-nerd-dictation (1.12.2) noble; urgency=medium
+
+  * Improved performance
+  
+ -- Juan Ramon Pelegrina <juapesai@hotmail.com>  Tue, 24 Mar 2026 09:09:18 +0100
+
 plasma-widget-nerd-dictation (1.12.1) noble; urgency=medium
 
   * Minor fixed in CMakeLists

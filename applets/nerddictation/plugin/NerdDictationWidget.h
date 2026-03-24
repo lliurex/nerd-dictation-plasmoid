@@ -120,7 +120,7 @@ private:
     QString actionToRun;
     bool m_waitForRun=false;
     bool isNerdDictationRun=false;
-    int previousState;
+    int previousState=-1;
 
     NerdDictationWidgetUtils* m_utils;
 

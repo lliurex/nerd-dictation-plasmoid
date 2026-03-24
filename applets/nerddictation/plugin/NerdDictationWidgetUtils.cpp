@@ -44,26 +44,28 @@ bool NerdDictationWidgetUtils::isNerdDictationInstalled(){
 
 }
 
-bool NerdDictationWidgetUtils::isNerdDictationRun(){
+void NerdDictationWidgetUtils::isNerdDictationRun(){
 
-    QProcess process;
-    QStringList output;
-    QString outputInfo;
-    bool isRunning=false;
-    QString cmd="ps -ef | grep 'nerd-dictation' | grep -v 'grep'";
-    process.start("/bin/sh",QStringList()<<"-c"<<cmd);
-    process.waitForFinished(-1);
-    QString stdout=process.readAllStandardOutput();
-    QString stderr=process.readAllStandardError();
-    output=stdout.split(" ");
-    if (output.length()>1){
-        isRunning=true;
-        
+    if (m_process) {
+        return; 
     }
 
-    return isRunning;
+    m_process = new QProcess(this);
 
+    connect(m_process, QOverload<int, QProcess::ExitStatus>::of(&QProcess::finished),
+        this, [this](int exitCode, QProcess::ExitStatus exitStatus) {       
+        if (!m_process) return;
 
+        QString output = QString::fromUtf8(m_process->readAllStandardOutput()).trimmed();
+        bool isRunning = !output.isEmpty();
+
+        emit isNerdDictationRunFinished(isRunning);
+
+        m_process->deleteLater();
+        m_process = nullptr;
+    });
+
+    m_process->start("pgrep", {"nerd-dictation"});
 }
 
 

@@ -23,12 +23,24 @@
 #include <QPointer>
 #include <QThread>
 
+#include <QtQml/qqmlregistration.h>
+
 #include "NerdDictationWidgetUtils.h"
 
 class NerdDictationWidget : public QObject
 {
     Q_OBJECT
+    QML_ELEMENT
 
+    public:
+    /**
+     * System tray icon states.
+     */
+    enum TrayStatus {
+        ActiveStatus = 0,
+        PassiveStatus,
+        HiddenStatus
+    };
 
     Q_PROPERTY(TrayStatus status READ status NOTIFY statusChanged)
     Q_PROPERTY(QString toolTip READ toolTip NOTIFY toolTipChanged)
@@ -39,23 +51,14 @@ class NerdDictationWidget : public QObject
     Q_PROPERTY(bool canResume READ canResume NOTIFY canResumeChanged)
     Q_PROPERTY(bool canStop READ canStop NOTIFY canStopChanged)
     Q_PROPERTY(QString placeHolderText READ placeHolderText NOTIFY placeHolderTextChanged)
+    Q_PROPERTY(bool waitForRun READ waitForRun NOTIFY waitForRunChanged)
+    Q_ENUM(TrayStatus)
 
 
-    Q_ENUMS(TrayStatus)
-
-public:
-    /**
-     * System tray icon states.
-     */
-    enum TrayStatus {
-        ActiveStatus = 0,
-        PassiveStatus,
-    };
-
-    NerdDictationWidget(QObject *parent = nullptr);
+    explicit NerdDictationWidget(QObject *parent = nullptr);
 
     TrayStatus status() const;
-    void changeTryIconState (int state);
+    void changeTryIconState (int state, bool isError=false);
     void setStatus(TrayStatus status);
 
     QString toolTip() const;
@@ -82,6 +85,9 @@ public:
     QString placeHolderText() const;
     void setPlaceHolderText(const QString &name);
 
+    bool waitForRun();
+    void setWaitForRun(bool);
+
 public slots:
     
     void manage_status(const QString &action);
@@ -98,6 +104,7 @@ signals:
     void canResumeChanged();
     void canStopChanged();
     void placeHolderTextChanged();
+    void waitForRunChanged();
 
 private:
 
@@ -111,10 +118,16 @@ private:
     bool m_canResume=false;
     bool m_canStop=false;
     QString m_placeHolderText;
-    
+    QString actionToRun;
+    bool m_waitForRun=false;
     bool isNerdDictationRun=false;
+    int previousState=-1;
 
     NerdDictationWidgetUtils* m_utils;
+
+    private slots:
+    
+        void handleIsNerdDictationRunFinished(bool isRunning);
 };
 
 #endif // PLASMA_NERD_DICTATION_WIDGET_H

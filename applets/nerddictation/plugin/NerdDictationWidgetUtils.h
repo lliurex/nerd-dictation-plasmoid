@@ -28,24 +28,39 @@ class NerdDictationWidgetUtils : public QObject
 
 
 public:
+
+    static NerdDictationWidgetUtils& instance(){
+        static NerdDictationWidgetUtils _instance;
+        return _instance;
+    }
+
+    NerdDictationWidgetUtils(const NerdDictationWidgetUtils&)=delete;
+    NerdDictationWidgetUtils& operator=(const NerdDictationWidgetUtils&) =delete;
    
-
-    NerdDictationWidgetUtils(QObject *parent = nullptr);
-
     bool isNerdDictationInstalled();
+    void manageStatus(const QString &action);
     void isNerdDictationRun();
 
 signals:
 
     void isNerdDictationRunFinished(bool isRunning);
+    void statusChanged(int targetState, bool isError);
+    void dictationError(const QString &errorText);
+
+private slots:
+
+    void handleIsNerdDictationRunFinished(bool isRunning);
 
 
 private: 
 
+    explicit NerdDictationWidgetUtils();
+
     QFile TARGET_FILE;
-    QProcess *m_process = nullptr;
+    QProcess *m_checkProcess = nullptr;
 
-
+    QString m_actionToRun;
+    bool m_waitForRun=false;
       
 };
 

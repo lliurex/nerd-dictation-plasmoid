@@ -30,11 +30,20 @@
 
 NerdDictationWidget::NerdDictationWidget(QObject *parent)
     : QObject(parent)
-    ,m_utils(new NerdDictationWidgetUtils(this))
+    ,m_utils(&NerdDictationWidgetUtils::instance())
 
     
 {
-    connect(m_utils,&NerdDictationWidgetUtils::isNerdDictationRunFinished,this,&NerdDictationWidget::handleIsNerdDictationRunFinished);
+    connect(m_utils,&NerdDictationWidgetUtils::statusChanged,this,[this](int targetState, bool isError ){
+        qDebug()<<"RECIBIDO"<<targetState;
+        this->changeTryIconState(targetState,isError);
+    });
+
+    connect(m_utils,&NerdDictationWidgetUtils::dictationError,this,[this](const QString &errorText ){
+        if (!m_placeHolderText.contains("An error")){
+            this->setPlaceHolderText(m_placeHolderText+"\n"+errorText);
+        }
+    });
 
     plasmoidMode();
 }    
@@ -131,61 +140,11 @@ void NerdDictationWidget::changeTryIconState(int state, bool isError){
 
 void NerdDictationWidget::manage_status(const QString &action)
 {
-    
+    qDebug()<<"ACTION"<<action;
     if (!m_waitForRun){
-        setWaitForRun(true);
-        actionToRun=action;
-        m_utils->isNerdDictationRun();
+        m_utils->manageStatus(action);
     }
-}
-
-void NerdDictationWidget::handleIsNerdDictationRunFinished(bool isRunning)
-{
     
-    QString errorText = i18n("An error was detected during execution");
-    QString holderText = m_placeHolderText.contains("An error") ? 
-                         m_placeHolderText : (m_placeHolderText + "\n" + errorText);
-
-    QProcess *process = new QProcess(this);
-    QStringList args;
-    int targetState = 0;
-
-    if (!isRunning) {
-        args << "begin";
-        targetState = 2;
-    } else {
-        if (actionToRun == "pause") {
-            args << "suspend";
-            targetState = 3;
-        } else if (actionToRun == "resume") {
-            args <<"resume";
-            targetState = 2;
-        } else if (actionToRun == "stop") {
-            args << "end";
-            targetState = 0;
-        }
-    }
-
-    connect(process, &QProcess::errorOccurred, this, [this, holderText](QProcess::ProcessError error) {
-        qDebug() << "[NERD-DICTATION CRITICAL-ERROR:]" << error;
-        this->setPlaceHolderText(holderText);
-        this->changeTryIconState(0,true);
-    });
-
-    connect(process, QOverload<int, QProcess::ExitStatus>::of(&QProcess::finished), 
-            this, [this, process, holderText](int exitCode, QProcess::ExitStatus exitStatus) {
-        
-        if (exitStatus == QProcess::CrashExit || exitCode != 0) {
-            qDebug() << "[NERD-DICTATION ERROR:]" << process->readAllStandardError();
-            this->setPlaceHolderText(holderText);
-            this->changeTryIconState(0,true);
-        }
-        process->deleteLater();
-    });
-
-    process->start("nerd-dictation", args);
-    changeTryIconState(targetState,false);
-
 }
 
 void NerdDictationWidget::open_help()

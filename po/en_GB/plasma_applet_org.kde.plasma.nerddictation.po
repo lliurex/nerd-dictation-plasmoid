@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 1.0\n"
 "Report-Msgid-Bugs-To: http://lliurex.net\n"
-"POT-Creation-Date: 2026-03-23 16:54+0100\n"
-"PO-Revision-Date: 2026-03-23 16:58+0100\n"
+"POT-Creation-Date: 2026-10-28 16:36+0100\n"
+"PO-Revision-Date: 2026-10-28 16:37+0100\n"
 "Last-Translator: lliurex <lliurex@lliurex.net>\n"
 "Language-Team: Catalan <kde-i18n-ca@kde.org>\n"
 "Language: es\n"
@@ -43,9 +43,9 @@ msgid "See help"
 msgstr "See help"
 
 #: ../applets/nerddictation/package/contents/ui/main.qml:142
-#: ../applets/nerddictation/plugin/NerdDictationWidget.cpp:77
-#: ../applets/nerddictation/plugin/NerdDictationWidget.cpp:96
-#: ../applets/nerddictation/plugin/NerdDictationWidget.cpp:106
+#: ../applets/nerddictation/plugin/NerdDictationWidget.cpp:86
+#: ../applets/nerddictation/plugin/NerdDictationWidget.cpp:105
+#: ../applets/nerddictation/plugin/NerdDictationWidget.cpp:115
 #, kde-format
 msgid "Clic to start dictation"
 msgstr "Clic to start dictation"
@@ -65,42 +65,42 @@ msgstr "Clic to continue dictation"
 msgid "Clic to end dictation"
 msgstr "Clic to end dictation"
 
-#: ../applets/nerddictation/plugin/NerdDictationWidget.cpp:62
+#: ../applets/nerddictation/plugin/NerdDictationWidget.cpp:71
 #, kde-format
 msgid "Nerd-Dictation"
 msgstr "Nerd-Dictation"
 
-#: ../applets/nerddictation/plugin/NerdDictationWidget.cpp:80
+#: ../applets/nerddictation/plugin/NerdDictationWidget.cpp:89
 #, kde-format
 msgid "No dictation running"
 msgstr "No dictation running"
 
-#: ../applets/nerddictation/plugin/NerdDictationWidget.cpp:83
+#: ../applets/nerddictation/plugin/NerdDictationWidget.cpp:92
 #, kde-format
 msgid "Clic to pause/end dictation"
 msgstr "Clic to pause/end dictation"
 
-#: ../applets/nerddictation/plugin/NerdDictationWidget.cpp:87
+#: ../applets/nerddictation/plugin/NerdDictationWidget.cpp:96
 #, kde-format
 msgid "The dictation is running"
 msgstr "The dictation is running"
 
-#: ../applets/nerddictation/plugin/NerdDictationWidget.cpp:90
+#: ../applets/nerddictation/plugin/NerdDictationWidget.cpp:99
 #, kde-format
 msgid "Clic to restart/end dictation"
 msgstr "Clic to restart/end dictation"
 
-#: ../applets/nerddictation/plugin/NerdDictationWidget.cpp:94
+#: ../applets/nerddictation/plugin/NerdDictationWidget.cpp:103
 #, kde-format
 msgid "The dictation is paused"
 msgstr "The dictation is paused"
 
-#: ../applets/nerddictation/plugin/NerdDictationWidget.cpp:103
+#: ../applets/nerddictation/plugin/NerdDictationWidget.cpp:112
 #, kde-format
 msgid "Failed to run action. Try again"
 msgstr "Failed to run action. Try again"
 
-#: ../applets/nerddictation/plugin/NerdDictationWidget.cpp:145
+#: ../applets/nerddictation/plugin/NerdDictationWidgetUtils.cpp:90
 #, kde-format
 msgid "An error was detected during execution"
 msgstr "An error was detected during execution"

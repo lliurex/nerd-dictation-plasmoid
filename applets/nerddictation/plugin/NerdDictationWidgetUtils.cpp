@@ -17,17 +17,22 @@
  */
 #include "NerdDictationWidgetUtils.h"
 
+#include <KLocalizedString>
+#include <KFormat>
+
+#include <QProcess>
 #include <QDebug>
 #include <sys/types.h>
 #include <thread>
 
 using namespace std;
 
-NerdDictationWidgetUtils::NerdDictationWidgetUtils(QObject *parent)
-    : QObject(parent)
+NerdDictationWidgetUtils::NerdDictationWidgetUtils()
+    : QObject(nullptr)
+    ,m_waitForRun(false)
        
 {
-
+    connect(this,&NerdDictationWidgetUtils::isNerdDictationRunFinished,this,&NerdDictationWidgetUtils::handleIsNerdDictationRunFinished);
     TARGET_FILE.setFileName("/usr/bin/nerd-dictation");
   
 }    
@@ -44,28 +49,92 @@ bool NerdDictationWidgetUtils::isNerdDictationInstalled(){
 
 }
 
+void NerdDictationWidgetUtils::manageStatus(const QString &action){
+
+    if (!m_waitForRun){
+        m_waitForRun=true;
+        m_actionToRun=action;
+        isNerdDictationRun();
+    }
+
+}
+
 void NerdDictationWidgetUtils::isNerdDictationRun(){
 
-    if (m_process) {
+    if (m_checkProcess) {
         return; 
     }
 
-    m_process = new QProcess(this);
+    m_checkProcess = new QProcess(this);
 
-    connect(m_process, QOverload<int, QProcess::ExitStatus>::of(&QProcess::finished),
+    connect(m_checkProcess, QOverload<int, QProcess::ExitStatus>::of(&QProcess::finished),
         this, [this](int exitCode, QProcess::ExitStatus exitStatus) {       
-        if (!m_process) return;
+        if (!m_checkProcess) return;
 
-        QString output = QString::fromUtf8(m_process->readAllStandardOutput()).trimmed();
+        QString output = QString::fromUtf8(m_checkProcess->readAllStandardOutput()).trimmed();
         bool isRunning = !output.isEmpty();
 
         emit isNerdDictationRunFinished(isRunning);
 
-        m_process->deleteLater();
-        m_process = nullptr;
+        m_checkProcess->deleteLater();
+        m_checkProcess = nullptr;
     });
 
-    m_process->start("pgrep", {"nerd-dictation"});
+    m_checkProcess->start("pgrep", {"nerd-dictation"});
 }
+
+void NerdDictationWidgetUtils::handleIsNerdDictationRunFinished(bool isRunning)
+{
+    
+
+    QString errorText = i18n("An error was detected during execution");
+    
+    QProcess *currentProcess = new QProcess(this);
+
+    connect(currentProcess, &QProcess::errorOccurred, this, [this, currentProcess,errorText](QProcess::ProcessError error) {
+        qDebug() << "[NERD-DICTATION CRITICAL-ERROR:]" << error;
+        emit dictationError(errorText);
+        emit statusChanged(0,true);
+        m_waitForRun=false;
+        currentProcess->deleteLater();
+    });
+
+    connect(currentProcess, QOverload<int, QProcess::ExitStatus>::of(&QProcess::finished), 
+        this, [this,currentProcess,errorText](int exitCode, QProcess::ExitStatus exitStatus) {
+        
+        if (exitStatus == QProcess::CrashExit || exitCode != 0) {
+            qDebug() << "[NERD-DICTATION ERROR:]" << currentProcess->readAllStandardError();
+            emit dictationError(errorText);
+            emit statusChanged(0,true);
+        }
+        m_waitForRun=false;
+        currentProcess->deleteLater();
+    });
+
+    QStringList args;
+    int targetState=0;
+
+    if (!isRunning) {
+        args << "begin";
+        targetState = 2;
+    } else {
+        if (m_actionToRun == "pause") {
+            args << "suspend";
+            targetState = 3;
+        } else if (m_actionToRun == "resume") {
+            args <<"resume";
+            targetState = 2;
+        } else if (m_actionToRun == "stop") {
+            args << "end";
+            targetState = 0;
+        }
+    }
+    
+    currentProcess->start("nerd-dictation", args);
+    emit statusChanged(targetState,false);
+    m_waitForRun=false;
+
+}
+
 
 
